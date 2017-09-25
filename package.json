@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/birm/HubSpokeSocket/issues"
   },
-  "homepage": "https://github.com/birm/HubSpokeSocket#readme"
+  "homepage": "https://github.com/birm/HubSpokeSocket#readme",
+  "dependencies": {
+    "express": "^4.15.5",
+    "socket.io": "^2.0.3"
+  }
 }
