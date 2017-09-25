@@ -1,3 +1,5 @@
+var socket = io();
+
 /* Spoke - communicate state information with hub using (this).state = {Value}
  * @constructor
  * @param hub_id - the hub's hash, and this item's base hash
@@ -8,21 +10,19 @@ class Spoke {
         this.hub_id = hub_id
         this.id = hub_id + "-" + id;
         this._state = "";
-        // TODO switch to socket
-        window.addEventListener('storage', (e) => this.listen(e));
+        socket.on('event', (e) => this.listen(e));
     }
 
     listen(event){
       if (event.key == this.hub_id){
-        this._state = event.newValue;
+        this._state = event.value;
       }
     }
 
     set state (value) {
         /* set this hub's state and update hub */
         this._state = value;
-        // TODO switch to socket
-        window.localStorage.setItem(this.id, value);
+        socket.emit("event", {key: this.id, value: value});
     }
     get state() {
         /* get parent state */
@@ -49,22 +49,20 @@ class Hub {
             hash = Math.abs(hash);
         }
         this.id = hash;
-        // TODO switch to socket
-        window.addEventListener('storage', (e) => this.listen(e));
+        socket.on('event', (e) => this.listen(e));
     }
 
     // TODO confirm it won't self trigger. I think storage doesn't apply in window
     listen(event){
       if (event.key.split("-")[0] == this.id){
-        this._state = event.newValue;
+        this._state = event.value;
       }
     }
 
     set state(value) {
         /* set this hub's state and update spokes*/
         this._state = value;
-        // TODO switch to socket
-        window.localStorage.setItem(this.id, value);
+        socket.emit("event", {key: this.id, value: value});
     }
     get state(){
       // the state is the last updated of all states
