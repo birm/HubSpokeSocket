@@ -1,4 +1,6 @@
-var socket = io();
+import io from 'socket.io-client'; // requires socket io client
+var HOSTNAME = "http://localhost"
+var socket = io(HOSTNAME);
 
 /* Spoke - communicate state information with hub using (this).state = {Value}
  * @constructor
@@ -13,16 +15,19 @@ class Spoke {
         socket.on('event', (e) => this.listen(e));
     }
 
-    listen(event){
-      if (event.key == this.hub_id){
-        this._state = event.value;
-      }
+    listen(event) {
+        if (event.key == this.hub_id) {
+            this._state = event.value;
+        }
     }
 
-    set state (value) {
+    set state(value) {
         /* set this hub's state and update hub */
         this._state = value;
-        socket.emit("event", {key: this.id, value: value});
+        socket.emit("event", {
+            key: this.id,
+            value: value
+        });
     }
     get state() {
         /* get parent state */
@@ -53,20 +58,23 @@ class Hub {
     }
 
     // TODO confirm it won't self trigger. I think storage doesn't apply in window
-    listen(event){
-      if (event.key.split("-")[0] == this.id){
-        this._state = event.value;
-      }
+    listen(event) {
+        if (event.key.split("-")[0] == this.id) {
+            this._state = event.value;
+        }
     }
 
     set state(value) {
         /* set this hub's state and update spokes*/
         this._state = value;
-        socket.emit("event", {key: this.id, value: value});
+        socket.emit("event", {
+            key: this.id,
+            value: value
+        });
     }
-    get state(){
-      // the state is the last updated of all states
-      return this._state;
+    get state() {
+        // the state is the last updated of all states
+        return this._state;
     }
 
 }
