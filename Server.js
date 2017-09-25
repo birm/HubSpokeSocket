@@ -2,7 +2,7 @@ var server = require('http').createServer();
 var io = require('socket.io')(server);
 
 function event_handle(data){
-  pass;
+  socket.emit("event", data);
 }
 
 io.on('connection', function(client){
