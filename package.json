@@ -1,0 +1,27 @@
+{
+  "name": "hubspokesocket",
+  "version": "1.0.0",
+  "description": "Hub and Spoke Model using Socket",
+  "main": "Server.js",
+  "scripts": {
+    "test": "node Test.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/birm/HubSpokeSocket.git"
+  },
+  "keywords": [
+    "hub",
+    "spoke",
+    "socket",
+    "communication",
+    "client"
+  ],
+  "author": "birm",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/birm/HubSpokeSocket/issues"
+  },
+  "homepage": "https://github.com/birm/HubSpokeSocket#readme"
+}
