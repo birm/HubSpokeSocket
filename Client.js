@@ -1,18 +1,19 @@
 import io from 'socket.io-client'; // requires socket io client
-var HOSTNAME = "http://localhost"
-var socket = io(HOSTNAME);
+
 
 /* Spoke - communicate state information with hub using (this).state = {Value}
  * @constructor
  * @param hub_id - the hub's hash, and this item's base hash
  * @param id - identifier for the spoke given the parent
+ * @param hostname - the hostname of the server
  */
 class Spoke {
-    constructor(hub_id, id) {
+    constructor(hub_id, id, hostname) {
         this.hub_id = hub_id
         this.id = hub_id + "-" + id;
         this._state = "";
-        socket.on('event', (e) => this.listen(e));
+        this.socket = io(hostname);
+        this.socket.on('event', (e) => this.listen(e));
     }
 
     listen(event) {
@@ -24,7 +25,7 @@ class Spoke {
     set state(value) {
         /* set this hub's state and update hub */
         this._state = value;
-        socket.emit("event", {
+        this.socket.emit("event", {
             key: this.id,
             value: value
         });
@@ -39,10 +40,10 @@ class Spoke {
 
 /* Hub - communicate state information with spokes using (this).state = {Value}
  * @constructor
- * @param callback - what to do with new information
+ * @param hostname - the hostname of the server
  */
 class Hub {
-    constructor() {
+    constructor(hostname) {
         this._state = "";
         // INSECURE HASH FUNCTION to avoid collision
         var dt = new Date().toString(),
@@ -54,7 +55,8 @@ class Hub {
             hash = Math.abs(hash);
         }
         this.id = hash;
-        socket.on('event', (e) => this.listen(e));
+        this.socket = io(hostname);
+        this.socket.on('event', (e) => this.listen(e));
     }
 
     // TODO confirm it won't self trigger. I think storage doesn't apply in window
@@ -67,7 +69,7 @@ class Hub {
     set state(value) {
         /* set this hub's state and update spokes*/
         this._state = value;
-        socket.emit("event", {
+        this.socket.emit("event", {
             key: this.id,
             value: value
         });
