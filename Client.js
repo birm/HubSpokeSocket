@@ -1,4 +1,4 @@
-import io from 'socket.io-client'; // requires socket io client
+// requires socket io client to be included
 
 
 /* Spoke - communicate state information with hub using (this).state = {Value}
@@ -61,7 +61,7 @@ class Hub {
 
     // TODO confirm it won't self trigger. I think storage doesn't apply in window
     listen(event) {
-        if (event.key.split("-")[0] == this.id) {
+        if (event.key.toString().split("-")[0] == this.id) {
             this._state = event.value;
         }
     }
@@ -80,5 +80,3 @@ class Hub {
     }
 
 }
-
-module.exports = {Hub:Hub, Spoke:Spoke};

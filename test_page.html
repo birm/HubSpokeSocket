@@ -1,0 +1,12 @@
+<script src="socket.io.js"></script>
+<script src="Client.js"></script>
+<script>
+var H = new Hub('localhost:3001');
+var S = new Spoke(H.id, 's', 'localhost:3001');
+
+// push value from hub to spoke
+H.state = "testing"
+window.setTimeout(function(){window.alert("sending " + H.state);},200);
+window.setTimeout(function(){window.alert("recieving " + S.state);},2000);
+
+</script>
