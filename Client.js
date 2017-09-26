@@ -78,3 +78,5 @@ class Hub {
     }
 
 }
+
+module.exports = {Hub:Hub, Spoke:Spoke};
