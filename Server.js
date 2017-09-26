@@ -3,8 +3,11 @@ var io = require('socket.io')(server);
 
 function Server(){
   io.on('connection', function(client){
-    client.on('event', function(data){
-      io.emit("event", data);
+    client.on('hubEvent', function(data){
+      io.emit("hubEvent", data);
+    });
+    client.on('spokeEvent', function(data){
+      io.emit("spokeEvent", data);
     });
     client.on('disconnect', function(){});
   });
