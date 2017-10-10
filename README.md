@@ -17,7 +17,9 @@ Both require that the server is running, and the address is passed as the last/o
 
 For both, you can use `{the hub or spoke object}.callback = {callback function}` to callback on updating the state from the other component.
 
-Updating state is done by `{the hub or spoke object}.state = {object of any sort*}` 
+Updating state is done by `{the hub or spoke object}.state = {object of any sort*}`
+
+The Hub keeps track of the last spoke state passed in {the hub object}.state, and each spoke's last update in {the hub object}.spokes{spokeid}
 
 \* We haven't tested compatibility exotic types, so be careful!
 
@@ -33,4 +35,3 @@ The spokes communicate with their respective hub, bidirectionally. Spokes do not
 Initalize like `new Spoke({hub object}.id, 'string identifier for this spoke', 'string of server host path and port')`
 
 The spoke id is the hub's id and the string identifier appeneded with a hypen. For an example, if a Hub has id of 5909, then the spoke may have id of 5909-d.
-
