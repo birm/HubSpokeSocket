@@ -27,7 +27,6 @@ class Spoke {
 
     set state(value) {
         /* set this hub's state and update hub */
-        // TODO partial state updates
         this._state = value;
         this.socket.emit("spokeEvent", {
             key: this.id,
@@ -46,6 +45,7 @@ class Spoke {
  * @constructor
  * @param hostname - the hostname of the server
  * set event callback by {this}.callback = {callback}
+ * The hub also tracks each spoke's last update using (this).spokes{spokeid}
  */
 class Hub {
     constructor(hostname) {
@@ -62,20 +62,20 @@ class Hub {
         this.id = hash;
         this.socket = io(hostname);
         this.socket.on('spokeEvent', (e) => this.listen(e));
-        this.callback = console.log
+        this.callback = console.log;
+        this.spokes = {}
     }
 
-    // TODO confirm it won't self trigger. I think storage doesn't apply in window
     listen(event) {
         if (!(this.id == event.key) & event.key.toString().split("-")[0] == this.id) {
             this._state = event.value;
+            this.spokes{event.key} = event.value;
             this.callback(event.value);
         }
     }
 
     set state(value) {
         /* set this hub's state and update spokes*/
-        // TODO partial state updates
         this._state = value;
         this.socket.emit("hubEvent", {
             key: this.id,
