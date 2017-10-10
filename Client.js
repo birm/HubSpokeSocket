@@ -27,6 +27,7 @@ class Spoke {
 
     set state(value) {
         /* set this hub's state and update hub */
+        // TODO partial state updates
         this._state = value;
         this.socket.emit("spokeEvent", {
             key: this.id,
@@ -74,6 +75,7 @@ class Hub {
 
     set state(value) {
         /* set this hub's state and update spokes*/
+        // TODO partial state updates
         this._state = value;
         this.socket.emit("hubEvent", {
             key: this.id,
