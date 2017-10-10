@@ -19,7 +19,9 @@ For both, you can use `{the hub or spoke object}.callback = {callback function}`
 
 Updating state is done by `{the hub or spoke object}.state = {object of any sort*}`
 
-The Hub keeps track of the last spoke state passed in {the hub object}.state, and each spoke's last update in {the hub object}.spokes{spokeid}
+The Hub keeps track of the last spoke state passed in {the hub object}.state, and each spoke's last update in {the hub object}.spokes{spoke prefix}
+
+Use of .state and .spokes allows flexibility on how to expect communication and interaction.
 
 \* We haven't tested compatibility exotic types, so be careful!
 
