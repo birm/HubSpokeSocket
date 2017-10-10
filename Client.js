@@ -69,7 +69,8 @@ class Hub {
     listen(event) {
         if (!(this.id == event.key) & event.key.toString().split("-")[0] == this.id) {
             this._state = event.value;
-            this.spokes{event.key} = event.value;
+            let spoke = vent.key.toString();
+            this.spokes{spoke.substr(spoke.indexOf("-")+1)} = event.value;
             this.callback(event.value);
         }
     }
