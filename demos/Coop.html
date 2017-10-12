@@ -4,11 +4,11 @@
 <script>
 function init(){
   var item;
-  if (document.getElementById("hub_id").value === "HUB"){
+  if (document.getElementById("hub").value === "HUB"){
     item = new Hub("localhost:3001");
   }
   else{
-    item = new Spoke(document.getElementById("hub_id").value, "b", "localhost:3001");
+    item = new Spoke(document.getElementById("hub").value, "b", "localhost:3001");
   }
 
 }
