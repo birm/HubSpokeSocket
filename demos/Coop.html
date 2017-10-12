@@ -1,11 +1,26 @@
 <html>
 <head>
 <script src="../Client.js"></script>
+<script>
+function init(){
+  var item;
+  if (document.getElementById("hub_id").value === "HUB"){
+    item = new Hub("localhost:3001");
+  }
+  else{
+    item = new Spoke(document.getElementById("hub_id").value, "b", "localhost:3001");
+  }
+
+}
+</script>
 </head>
 <body>
   <h1> Cooperative Demo </h1>
   <p> In this demo, the hub and spoke(s) all work on one object.</p>
-  <p> TODO something about the actual demo app...</p>
+  <p> The Hub and Spokes both write the same word.</p>
+  <label for="hub">Hub ID (or HUB to act as hub): </label><input id="hub"></input><br/>
+  <button onClick="init()">intalize</button>
+  <label for="word">Word: </label><input id="word"></input>
   <h1>Code</h1>
   <code> annotated code</code>
 </body>
