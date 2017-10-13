@@ -3,21 +3,30 @@
   <script src="../socket.io.js"></script>
   <script src="../Client.js"></script>
   <script>
+  // item is hub or spoke with global closure so other functions can use it
   var item;
+  // Function to deal with responses
   var response = function(state, spokes){
+    // use the spokes callback to show what each spoke is doing seprately
     document.getElementById("responses").innerHTML = JSON.stringify(spokes);
   }
+  // Start the hub or spoke
   function init(){
     if (document.getElementById("hub").value === "HUB"){
       item = new Hub("localhost:3001");
-      // show responses if hub
+      // show responses in the document if this is the hub
       item.callback = response;
+      // Announce the hub id so spokes can talk to it
+      document.getElementById("hubid").innerHTML = "<p> Hub ID: " + item.id + "</p>";
     }
     else{
+      // start a spoke which will talk/listen to the hub given.
       item = new Spoke(document.getElementById("hub").value, document.getElementById("name").value, "localhost:3001");
     }
   }
+  // Send the message
   function send(){
+    // communication is just setting the state!
     item.state = document.getElementById("word").value;
   }
   </script>
@@ -28,11 +37,10 @@
   <p> The Hub asks questions to the spokes, who answer.</p>
   <label for="hub">Hub ID (or HUB to act as hub): </label><input id="hub"></input><br/>
   <label for="name">Name (if not HUB): </label><input id="name"></input><br/>
-  <button onClick="init()">intalize</button>
+  <button onClick="init()">intalize</button></br>
+  <div id="hubid"></div
   <label for="word">Word: </label><input id="word"></input><br/>
   <button onClick="send()">Send</button>
   <div id="responses"></div>
-  <h1>Code</h1>
-  <code> annotated code</code>
 </body>
 </html>

@@ -5,11 +5,13 @@
   <script>
   var item;
   var response = function(state){
+    // use the state callback to show what the last update is
     document.getElementById("word").value = state;
   }
   function init(){
     if (document.getElementById("hub").value === "HUB"){
       item = new Hub("localhost:3001");
+      document.getElementById("hubid").innerHTML = "<p> Hub ID: " + item.id + "</p>";
     }
     else{
       item = new Spoke(document.getElementById("hub").value, document.getElementById("name").value, "localhost:3001");
@@ -28,10 +30,9 @@
   <p> The Hub and Spokes both write the same word.</p>
   <label for="hub">Hub ID (or HUB to act as hub): </label><input id="hub"></input><br/>
   <label for="name">Name (if not HUB): </label><input id="name"></input><br/>
-  <button onClick="init()">intalize</button>
+  <button onClick="init()">intalize</button></br>
+  <div id="hubid"></div>
   <label for="word">Word: </label><input id="word"></input><br/>
   <button onClick="send()">Send</button>
-  <h1>Code</h1>
-  <code> annotated code</code>
 </body>
 </html>
