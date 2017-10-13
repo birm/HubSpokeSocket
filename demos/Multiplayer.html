@@ -1,26 +1,37 @@
 <html>
 <head>
-<script src="../Client.js"></script>
-<script>
-function init(){
+  <script src="../socket.io.js"></script>
+  <script src="../Client.js"></script>
+  <script>
   var item;
-  if (document.getElementById("hub").value === "HUB"){
-    item = new Hub("localhost:3001");
+  var response = function(state, spokes){
+    document.getElementById("responses").innerHTML = JSON.stringify(spokes);
   }
-  else{
-    item = new Spoke(document.getElementById("hub").value, "b", "localhost:3001");
+  function init(){
+    if (document.getElementById("hub").value === "HUB"){
+      item = new Hub("localhost:3001");
+      // show responses if hub
+      item.callback = response;
+    }
+    else{
+      item = new Spoke(document.getElementById("hub").value, document.getElementById("name").value, "localhost:3001");
+    }
   }
-
-}
-</script>
+  function send(){
+    item.state = document.getElementById("word").value;
+  }
+  </script>
 </head>
 <body>
   <h1> Multiplayer Demo </h1>
   <p> In this demo, the hub tracks each spoke indpendently.</p>
   <p> The Hub asks questions to the spokes, who answer.</p>
   <label for="hub">Hub ID (or HUB to act as hub): </label><input id="hub"></input><br/>
+  <label for="name">Name (if not HUB): </label><input id="name"></input><br/>
   <button onClick="init()">intalize</button>
-  <label for="word">Word: </label><input id="word"></input>
+  <label for="word">Word: </label><input id="word"></input><br/>
+  <button onClick="send()">Send</button>
+  <div id="responses"></div>
   <h1>Code</h1>
   <code> annotated code</code>
 </body>
