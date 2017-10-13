@@ -15,7 +15,7 @@ The Client consists of the Hub and Spoke objects.
 
 Both require that the server is running, and the address is passed as the last/only argument.
 
-For both, you can use `{the hub or spoke object}.callback = {callback function}` to callback on updating the state from the other component.
+For both, you can use `{the hub or spoke object}.callback = {callback function}` to callback on updating the state from the other component. The hub callback is called with two attributes, the first is the last state, and the second is the spoke dictionary.
 
 Updating state is done by `{the hub or spoke object}.state = {object of any sort*}`
 
