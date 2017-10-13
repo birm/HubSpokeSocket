@@ -71,7 +71,7 @@ class Hub {
       let spoke = event.key.toString()
       this.spokes[spoke.substr(spoke.indexOf('-') + 1)] = event.value
             // call the callback
-      this.callback(event.value)
+      this.callback(event.value, this.spokes)
     }
   }
 
